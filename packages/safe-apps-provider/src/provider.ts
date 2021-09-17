@@ -3,6 +3,15 @@ import { EventEmitter } from 'events';
 import { EIP1193Provider } from './types';
 import { getLowerCase } from './utils';
 
+function bnToHex(bn: string | number | bigint | boolean): string {
+  const base = 16;
+  let hex = BigInt(bn).toString(base);
+  if (hex.length % 2) {
+    hex = '0' + hex;
+  }
+  return hex;
+}
+
 // The API is based on Ethereum JavaScript API Provider Standard. Link: https://eips.ethereum.org/EIPS/eip-1193
 export class SafeAppProvider implements EIP1193Provider {
   private readonly safe: SafeInfo;
@@ -40,7 +49,7 @@ export class SafeAppProvider implements EIP1193Provider {
     this.events.removeListener(event, listener);
   }
 
-  public get chainId(): number {
+  public get chainId(): string {
     return this.safe.chainId;
   }
 
@@ -54,7 +63,7 @@ export class SafeAppProvider implements EIP1193Provider {
 
       case 'net_version':
       case 'eth_chainId':
-        return `0x${this.chainId.toString(16)}`;
+        return `0x${bnToHex(this.chainId)}`;
 
       case 'eth_sendTransaction':
         const tx = {

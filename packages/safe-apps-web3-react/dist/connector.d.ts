@@ -9,7 +9,7 @@ declare class SafeAppConnector extends AbstractConnector {
     activate(): Promise<ConnectorUpdate>;
     getSafeInfo(): Promise<SafeInfo>;
     getProvider(): Promise<SafeAppProvider>;
-    getChainId(): Promise<number>;
+    getChainId(): Promise<string>;
     getAccount(): Promise<string>;
     deactivate(): void;
     isSafeApp(): Promise<boolean>;

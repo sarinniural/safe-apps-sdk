@@ -3,6 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SafeAppProvider = void 0;
 const events_1 = require("events");
 const utils_1 = require("./utils");
+function bnToHex(bn) {
+    const base = 16;
+    let hex = BigInt(bn).toString(base);
+    if (hex.length % 2) {
+        hex = '0' + hex;
+    }
+    return hex;
+}
 // The API is based on Ethereum JavaScript API Provider Standard. Link: https://eips.ethereum.org/EIPS/eip-1193
 class SafeAppProvider {
     constructor(safe, sdk) {
@@ -41,7 +49,7 @@ class SafeAppProvider {
                 return [this.safe.safeAddress];
             case 'net_version':
             case 'eth_chainId':
-                return `0x${this.chainId.toString(16)}`;
+                return `0x${bnToHex(this.chainId)}`;
             case 'eth_sendTransaction':
                 const tx = Object.assign({ value: '0', data: '0x' }, params[0]);
                 const resp = await this.sdk.txs.send({
@@ -118,6 +126,8 @@ class SafeAppProvider {
             }
             case 'eth_getLogs':
                 return this.sdk.eth.getPastLogs([params[0]]);
+            case 'eth_gasPrice':
+                return this.sdk.eth.getGasPrice();
             default:
                 throw Error(`"${request.method}" not implemented`);
         }

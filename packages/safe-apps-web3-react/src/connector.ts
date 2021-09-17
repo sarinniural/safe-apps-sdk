@@ -32,7 +32,7 @@ class SafeAppConnector extends AbstractConnector {
     return this.provider;
   }
 
-  public async getChainId(): Promise<number> {
+  public async getChainId(): Promise<string> {
     const provider = await this.getProvider();
     return provider.chainId;
   }

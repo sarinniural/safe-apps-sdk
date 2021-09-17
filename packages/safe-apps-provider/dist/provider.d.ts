@@ -12,7 +12,7 @@ export declare class SafeAppProvider implements EIP1193Provider {
     once(event: string, listener: any): void;
     off(event: string, listener: any): void;
     removeListener(event: string, listener: any): void;
-    get chainId(): number;
+    get chainId(): string;
     request(request: {
         method: string;
         params?: any[];
