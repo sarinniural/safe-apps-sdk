@@ -9,7 +9,12 @@ export type GetTxBySafeTxHashParams = {
 };
 
 export interface SendTransactionRequestParams {
-  safeTxGas?: number;
+  safeTxGas?: string;
+  baseGas?: string;
+  gasPrice?: string;
+  gasToken?: string;
+  refundReceiver?: string;
+  nonce?: string;
 }
 
 export interface SendTransactionsParams {
